@@ -26,6 +26,9 @@ app.use('/api/users',userRoutes)
 app.get('/', (req, res) => {
     res.send('API is running....')
 })
+app.use((err,req,res,next) => {
+    res.status(500).json({ message: err.message });
+  });
 
 const PORT = process.env.PORT;
 app.listen(PORT, () => {
