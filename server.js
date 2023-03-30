@@ -7,6 +7,7 @@ import morgan from 'morgan';
 import cors from "cors";
 
 import userRoutes from './routes/userRoutes.js'
+import productRoutes from './routes/productRoutes.js'
 
 dotenv.config()
 
@@ -22,6 +23,7 @@ if (process.env.NODE_ENV === 'development') {
 app.use(express.json());
 
 app.use('/api/users',userRoutes)
+app.use('/api/product',productRoutes)
 
 app.get('/', (req, res) => {
     res.send('API is running....')
