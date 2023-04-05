@@ -8,6 +8,7 @@ import cors from "cors";
 
 import userRoutes from './routes/userRoutes.js'
 import productRoutes from './routes/productRoutes.js'
+import orderRoutes from './routes/orderRoutes.js'
 
 dotenv.config()
 
@@ -22,15 +23,16 @@ if (process.env.NODE_ENV === 'development') {
 
 app.use(express.json());
 
-app.use('/api/users',userRoutes)
-app.use('/api/products',productRoutes)
+app.use('/api/users', userRoutes)
+app.use('/api/products', productRoutes)
+app.use('/api/orders',orderRoutes)
 
 app.get('/', (req, res) => {
     res.send('API is running....')
 })
-app.use((err,req,res,next) => {
+app.use((err, req, res, next) => {
     res.status(500).json({ message: err.message });
-  });
+});
 
 const PORT = process.env.PORT;
 app.listen(PORT, () => {
