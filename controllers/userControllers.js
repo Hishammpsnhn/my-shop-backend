@@ -1,7 +1,6 @@
-import asyncHandler from "express-async-handler";
 import User from "../models/userModal.js";
 import generateToken from "../utils/generateToken.js";
-import expressAsyncHandler from "express-async-handler";
+import asyncHandler from "express-async-handler";
 
 // @desc    Register a new user
 // @route   POST /api/users
@@ -80,7 +79,7 @@ export const getUserProfile = asyncHandler(async (req, res) => {
 // @desc    Update user profile
 // @route   PUT /api/users/profile
 // @access  Private
-export const updateUserProfile = expressAsyncHandler(async (req, res) => {
+export const updateUserProfile = asyncHandler(async (req, res) => {
   try {
     const user = await User.findById(req.user._id)
     if (user) {
@@ -105,5 +104,32 @@ export const updateUserProfile = expressAsyncHandler(async (req, res) => {
     }
   } catch (error) {
     console.log(error)
+  }
+})
+// @desc    Get all users
+// @route   GET /api/users
+// @access  Private/Admin
+export const getUsers = asyncHandler(async (req, res) => {
+  const users = await User.find({})
+  res.json(users)
+})
+
+// @desc    Delete user
+// @route   DELETE /api/users/:id
+// @access  Private/Admin
+export const deleteUser = asyncHandler(async (req, res) => {
+  const user = await User.findById(req.params.id)
+  console.log(user)
+  if (user) {
+    try {
+      await User.findByIdAndDelete(req.params.id)
+      res.json({ message: 'User removed' })
+
+    } catch (error) {
+      console.log(error)
+    }
+  } else {
+    res.status(404)
+    throw new Error('User not found')
   }
 })
