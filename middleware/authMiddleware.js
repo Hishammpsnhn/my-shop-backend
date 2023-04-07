@@ -4,7 +4,7 @@ import User from '../models/userModal.js'
 
 export const protect = asyncHandler(async (req, res, next) => {
   let token
-
+  console.log(req.headers.authorization)
   if (
     req.headers.authorization &&
     req.headers.authorization.startsWith('Bearer')

@@ -119,17 +119,33 @@ export const getUsers = asyncHandler(async (req, res) => {
 // @access  Private/Admin
 export const deleteUser = asyncHandler(async (req, res) => {
   const user = await User.findById(req.params.id)
-  console.log(user)
-  if (user) {
-    try {
-      await User.findByIdAndDelete(req.params.id)
-      res.json({ message: 'User removed' })
 
-    } catch (error) {
-      console.log(error)
-    }
+  if (user) {
+    await user.remove()
+    res.json({ message: 'User removed' })
   } else {
     res.status(404)
     throw new Error('User not found')
+  }
+})
+
+
+// @desc    edit user 
+// @route   PUT /api/users/:id
+// @access  Private admin
+export const editUser = asyncHandler(async (req, res) => {
+  try {
+    const user = await User.findById(req.params.id)
+    if (user) {
+      user.isAdmin = true
+      const updatae = await user.save()
+      console.log(updatae)
+      res.json({ message: "user edit success" })
+    } else {
+      res.status(404)
+      throw new Error('User not found')
+    }
+  } catch (error) {
+    console.log(error)
   }
 })
