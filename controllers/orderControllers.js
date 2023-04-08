@@ -48,8 +48,8 @@ export const getOrderById = expressAsyncHandler(async (req, res) => {
   const order = await Order.findById(req.params.id).populate(
     'user',
     'name email'
-    )
-    console.log(order)
+  )
+  console.log(order)
 
   if (order) {
     res.json(order)
@@ -107,12 +107,20 @@ export const updateOrderToDelivered = expressAsyncHandler(async (req, res) => {
 // @route   GET /api/orders/myorders
 // @access  Private
 export const getMyOrders = (async (req, res) => {
-  console.log("heloe")
   try {
-    
+
     const orders = await Order.find({ user: req.user._id })
     res.json(orders)
   } catch (error) {
     console.log(error)
   }
+})
+
+
+// @desc    Get all orders
+// @route   GET /api/orders
+// @access  Private/Admin
+export const allOrdersList = expressAsyncHandler(async (req, res) => {
+  const orders = await Order.find({}).populate('user', 'id name')
+  res.json(orders)
 })
