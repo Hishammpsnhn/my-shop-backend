@@ -5,7 +5,6 @@ import Order from "../models/orderModel.js"
 // @route   POST /api/orders
 // @access  Priv
 export const addOrderItems = expressAsyncHandler(async (req, res) => {
-  console.log(req.body)
   const {
     orderItems,
     shippingAddress,
@@ -49,8 +48,6 @@ export const getOrderById = expressAsyncHandler(async (req, res) => {
     'user',
     'name email'
   )
-  console.log(order)
-
   if (order) {
     res.json(order)
   } else {

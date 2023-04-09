@@ -7,7 +7,6 @@ import asyncHandler from "express-async-handler";
 // @access  Public
 export const registerUser = asyncHandler(async (req, res) => {
   const { name, email, password } = req.body;
-  console.log(name, email, password);
   const userExists = await User.findOne({ email })
 
   if (userExists) {
@@ -138,7 +137,6 @@ export const editUser = asyncHandler(async (req, res) => {
     if (user) {
       user.isAdmin = true
       const updatae = await user.save()
-      console.log(updatae)
       res.json({ message: "user edit success" })
     } else {
       res.status(404)
