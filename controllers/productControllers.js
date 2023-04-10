@@ -37,7 +37,7 @@ export const createProduct = asyncHandler(async (req, res) => {
     name: 'Sample name',
     price: 0,
     user: "64267c2f45ca07623fda474e",
-    image: 'data:image/jpeg;base64,',
+    image: '/uploads/image-1681148418197.jpg',
     brand: 'Sample brand',
     category: 'Sample category',
     countInStock: 0,
