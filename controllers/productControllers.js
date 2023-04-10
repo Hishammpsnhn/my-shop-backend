@@ -1,11 +1,10 @@
-import asyncHandler from "express-async-handler";
 import Product from "../models/productModal.js";
 import expressAsyncHandler from "express-async-handler";
 
 // @desc    Fetch all products
 // @route   GET /api/products
 // @access  Public
-export const getProducts = asyncHandler(async (req, res) => {
+export const getProducts = expressAsyncHandler(async (req, res) => {
   const pageSize = 10
   const page = Number(req.query.pageNumber) || 1
 
@@ -31,7 +30,7 @@ export const getProducts = asyncHandler(async (req, res) => {
 // @desc    Create a product
 // @route   POST /api/products
 // @access  Private/Admin
-export const createProduct = asyncHandler(async (req, res) => {
+export const createProduct = expressAsyncHandler(async (req, res) => {
   // const {name, description,price,user,image,brand,category,countInStock,numReviews} = req.body
   const product = new Product({
     name: 'Sample name',
@@ -53,7 +52,7 @@ export const createProduct = asyncHandler(async (req, res) => {
 // @desc    Fetch single product
 // @route   GET /api/products/:id
 // @access  Public
-export const getProductById = asyncHandler(async (req, res) => {
+export const getProductById = expressAsyncHandler(async (req, res) => {
   const product = await Product.findById(req.params.id)
 
   if (product) {
@@ -123,7 +122,7 @@ export const deleteProduct = expressAsyncHandler(async (req, res) => {
 // @desc    Update a product
 // @route   PUT /api/products/:id
 // @access  Private/Admin
-export const updateProduct = asyncHandler(async (req, res) => {
+export const updateProduct = expressAsyncHandler(async (req, res) => {
   const {
     name,
     price,
@@ -151,4 +150,12 @@ export const updateProduct = asyncHandler(async (req, res) => {
     res.status(404)
     throw new Error('Product not found')
   }
+})
+
+// @desc    get top 3 products
+// @route   get /api/products/top
+// @access  Private/Admin
+export const topProducts = expressAsyncHandler(async (req, res) => {
+  const topProduct = await Product.find({}).sort({ rating: -1 }).limit(3)
+  res.json(topProduct)
 })
