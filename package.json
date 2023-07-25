@@ -5,8 +5,10 @@
   "main": "index.js",
   "type": "module",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "nodemon server.js"
+    "server": "nodemon server.ts",
+    "dev": "nodemon",
+    "build": "tsc",
+    "start:dev": "nodemon"
   },
   "author": "",
   "license": "ISC",
