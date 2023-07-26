@@ -13,10 +13,10 @@ import uploadRoutes from './routes/uploadRoutes.js'
 
 dotenv.config()
 
-connectDB();
-
 const app = express();
 app.use(cors());
+connectDB();
+
 
 if (process.env.NODE_ENV === 'development') {
     app.use(morgan('dev'))
